@@ -19,7 +19,7 @@ function submitBookMark ()
 {
     if(submit.innerHTML==`Submit`)
     {
-        if(checkInputs()==true &&noIteration()!=true)
+        if(checkInputs()==true&& noIteration()!=true)
         {
             var site =
             {
@@ -48,7 +48,7 @@ function submitBookMark ()
 }
 function updateBookMark ()
 {
-    if(checkInputs()==true&&noIteration()!=true)
+    if(checkInputs()==true)
     {
         sites.splice(x,1,{name:siteName.value ,url:siteUrl.value})
         localStorage.setItem("sitelist",JSON.stringify(sites))
@@ -101,11 +101,15 @@ function updateSite(index)
 
 function deleteSite(index)
 {
-sites.splice(index,1)
+var result=window.confirm("Are You Sure You Want To Delet Site ?")
+if(result==true)
+{
+    sites.splice(index,1)
 localStorage.setItem("sitelist",JSON.stringify(sites))
 displaySite()
 submit.innerHTML=`Submit`
 clearSite()
+}
 
 }
 
@@ -113,12 +117,12 @@ function checkInputs()
 {
     if(siteName.value !=="" &&siteUrl.value !=="")
     {
-        error = `Please Enter Site Name & Url`
+       
         return true
     }
     else
     {
-
+        error = `Please Enter Site Name & Url`
         return false
     }
 
@@ -127,10 +131,14 @@ function noIteration()
 {
     for(let i= 0 ; i<sites.length;i++)
     {
-        if(sites[i].url.toLowerCase()==siteUrl.value.toLowerCase())
+        if(sites[i].url.toLowerCase()==siteUrl.value.toLowerCase()||sites[i].name.toLowerCase()==siteName.value.toLowerCase())
         {
             error = `Site Already Exist`
             return true ;
+        }
+        else
+        {
+            return false
         }
       
     }
